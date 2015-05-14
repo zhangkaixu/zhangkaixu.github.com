@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="算法数据结构," />
 
 
 
@@ -134,12 +134,23 @@
 <p>关于trie树与双数组trie树的原理非一两句话能介绍透彻，不过好在网上的资料都比较多，不难找到。 本文想介绍一下darts-clone用了啥黑科技达到这种效果的。</p>
 <a id="more"></a>
 <p>darts代码里的两个int， 分别叫做base和check。base用于计算当前节点的儿子节点，即base+儿子节点对应编码=儿子节点下标。check 用于检查儿子节点的正确性，因为不同的base+不同的编码可能得到相同的下标，check一般存的是其父亲节点的base。 如果是叶子节点，base存储的即是词条对应的value。</p>
-<p>所以看到base和check的量纲都是下标，用4个字节的int似乎也无可厚非。下面就来看看darts-clone用来哪些方法用一个int替代两个int的，简单说就是优化到bit。</p>
-<h2 id="用异或代替加法">用异或代替加法</h2><h2 id="用一个bit表示是否是叶子节点。">用一个bit表示是否是叶子节点。</h2><h2 id="非叶子节点，用一个bit表示是否自身有叶子节点">非叶子节点，用一个bit表示是否自身有叶子节点</h2><h2 id="非叶子节点，用一个byte代替check的功能">非叶子节点，用一个byte代替check的功能</h2><h2 id="非叶子节点，用剩下的22个bit存储了一部分的30bit数">非叶子节点，用剩下的22个bit存储了一部分的30bit数</h2>
+<p>所以看到base和check的量纲都是下标，用4个字节的int似乎也无可厚非。下面就来看看darts-clone用来哪些方法用一个int替代两个int的，并且速度还有所提升。</p>
+<h2 id="用异或代替加法">用异或代替加法</h2><p>用base找儿子节点的下标时，使用异或。不需要进位，感觉会比加法快一些，不过不太了解现在的CPU。</p>
+<h2 id="用一个bit表示是否是叶子节点">用一个bit表示是否是叶子节点</h2><p>是叶子节点，剩下31bit用来表示value。虽然比darts少了一个bit，不过大多数情况下是可以接受的。</p>
+<h2 id="非叶子节点，用一个bit表示是否自身有叶子节点">非叶子节点，用一个bit表示是否自身有叶子节点</h2><p>免去了根据base读一次内存的时间。</p>
+<h2 id="非叶子节点，用一个byte代替check的功能">非叶子节点，用一个byte代替check的功能</h2><p>通常trie树用来存字符串，一个节点对应的值是一个char，所以这个假设也可以接受。darts一个节点的值可以是int。</p>
+<h2 id="非叶子节点，用剩下的22个bit存储了一部分的30bit数">非叶子节点，用剩下的22个bit存储了一部分的30bit数</h2><p>这一点也比较巧妙。22个bit中有一个指示位。为0的时候，剩下21bit表示一个21位的数；为1的时候，剩下21bit表示一个低9位为0，高21位可以非零的30位的数。</p>
+
       
     </div>
 
     <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法数据结构/"> #算法数据结构 </a>
+          
+        </div>
       
 
       
@@ -224,7 +235,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -248,7 +259,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用异或代替加法"><span class="nav-number">1.</span> <span class="nav-text">用异或代替加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用一个bit表示是否是叶子节点。"><span class="nav-number">2.</span> <span class="nav-text">用一个bit表示是否是叶子节点。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非叶子节点，用一个bit表示是否自身有叶子节点"><span class="nav-number">3.</span> <span class="nav-text">非叶子节点，用一个bit表示是否自身有叶子节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非叶子节点，用一个byte代替check的功能"><span class="nav-number">4.</span> <span class="nav-text">非叶子节点，用一个byte代替check的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非叶子节点，用剩下的22个bit存储了一部分的30bit数"><span class="nav-number">5.</span> <span class="nav-text">非叶子节点，用剩下的22个bit存储了一部分的30bit数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用异或代替加法"><span class="nav-number">1.</span> <span class="nav-text">用异或代替加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用一个bit表示是否是叶子节点"><span class="nav-number">2.</span> <span class="nav-text">用一个bit表示是否是叶子节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非叶子节点，用一个bit表示是否自身有叶子节点"><span class="nav-number">3.</span> <span class="nav-text">非叶子节点，用一个bit表示是否自身有叶子节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非叶子节点，用一个byte代替check的功能"><span class="nav-number">4.</span> <span class="nav-text">非叶子节点，用一个byte代替check的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非叶子节点，用剩下的22个bit存储了一部分的30bit数"><span class="nav-number">5.</span> <span class="nav-text">非叶子节点，用剩下的22个bit存储了一部分的30bit数</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
