@@ -18,8 +18,9 @@ personal homepage
 * theano, nolearn, lasagne
 
 
-### jupyter
+### jupyter notebook
 * jupyter (ipython)
+* iTorch 在notebook中加入torch的kernel
 
 ### quant
 * tushare
