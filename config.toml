@@ -1,4 +1,6 @@
 baseURL = 'https://zhangkaixu.github.io/'
 languageCode = 'zh-cn'
 title = '淺斟低唱'
-theme = 'ananke'
+#theme = 'ananke'
+theme = 'PaperMod'
+
