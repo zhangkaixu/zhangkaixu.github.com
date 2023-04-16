@@ -6,7 +6,20 @@
     <description>Recent content in Posts on 淺斟低唱</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 14 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangkaixu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 16 Apr 2023 14:09:34 +0800</lastBuildDate><atom:link href="https://zhangkaixu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用p5.js给孩子写的计算题练习网页</title>
+      <link>https://zhangkaixu.github.io/posts/2023-04-14%E8%AE%A1%E7%AE%97%E9%A2%98/intro/</link>
+      <pubDate>Sun, 16 Apr 2023 14:09:34 +0800</pubDate>
+      
+      <guid>https://zhangkaixu.github.io/posts/2023-04-14%E8%AE%A1%E7%AE%97%E9%A2%98/intro/</guid>
+      <description>Processing是一个图形库，用java编写，很多搞艺术的人也写代码，用它生成2D、3D的图片和动画。
+p5.js是一个javascript版本的Processing，不需要JRE，直接在浏览器上就可以运行。加上js本身就比java简单，所以成了我试手的选择。
+孩子正在学习两位数乘法，我就用p5.js写了一个网页，让孩子练习乘法。错题需要改正，结果与时间自动下载保存。做到了“无人值守”地带娃。
+目前只有两位数乘法，以后也很好扩展。
+点击试用</description>
+    </item>
+    
     <item>
       <title>ChatGPT或成为人工智能CPU的“加法器”</title>
       <link>https://zhangkaixu.github.io/posts/2023-04-14/</link>

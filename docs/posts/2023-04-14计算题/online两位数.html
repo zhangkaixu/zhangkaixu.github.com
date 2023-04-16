@@ -1,0 +1,220 @@
+<html>
+    <script src="https://github.com/processing/p5.js/releases/download/v1.6.0/p5.min.js"></script>
+    <script>
+
+        class ProblemGenerator {
+            constructor() {
+            }
+            generate() {
+                throw "Not implemented";
+            }
+        }
+        class 两位数乘法 extends ProblemGenerator {
+            generate() {
+                let a;
+                let b;
+                do {
+                    a = int(random(11, 100));
+                } while (a%10==0);
+                do {
+                    b = int(random(11, 100));
+                } while (b%10==0);
+                let question = a + " × " + b;
+                let ans = "" + a * b;
+                //let ans = "3";
+                return [question, ans]
+            }
+        }
+
+        class ProblemSet {
+            constructor(generator, N=5) {
+                this.generator = generator;
+                // N: number of problems
+                this.N = N;
+
+                this.problems = [];
+                this.answers = [];
+
+                this.current_index = 0;
+
+                this.reset();
+                this.saved = false;
+                this.start_millis = millis();
+                this.finish_millis = undefined;
+            }
+
+            reset() {
+                // init all N problems
+                for (let i=0; i<this.N; i++) {
+                    let ret = this.generator.generate();
+                    this.problems.push(ret);
+                }
+                // init answer lists
+                for (let i=0; i<this.N; i++) {
+                    this.answers.push([]);
+                }
+            }
+
+            numberOfCorrect() {
+                let n = 0;
+                for (let i=0; i<this.N; i++) {
+                    if (this.answers[i].length > 0) {
+                        if (this.answers[i][this.answers[i].length-1] == this.problems[i][1]) {
+                            n += 1;
+                        }
+                    }
+                }
+                return n;
+            }
+
+            isAllPassed() {
+                return this.numberOfCorrect() == this.N;
+                for (let i=0; i<this.N; i++) {
+                    if (this.answers[i].length == 0) { 
+                        // has not been answered
+                        return false;
+                    }
+                    if (this.answers[i][this.answers[i].length-1] != this.problems[i][1]) { 
+                        // last answer is incorrect
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            getAllAnswers(index) {
+                let ans = "";
+                for (let i=0; i<this.answers[index].length; i++) {
+                    ans += this.answers[index][i];
+                    if (this.answers[index][i] == this.problems[index][1]) {
+                        ans += "✅   ";
+                    } else {
+                        ans += "❌   ";
+                    }
+                }
+                return ans;
+            }
+
+            make_history() {
+                let history = [];
+                for (let i=0; i<this.N; i++) {
+                    let line = this.problems[i][0] + " = " + this.getAllAnswers(i);
+                    history.push(line);
+                }
+                history.push("Time: " + ((this.finish_millis - this.start_millis)/1000).toFixed(2) + "s");
+                return history;
+            }
+
+            draw(ans) {
+                if (this.isAllPassed()) {
+                    let history = this.make_history();
+
+                    // print history
+                    textAlign(CENTER, CENTER);
+                    let unit = height/2000;
+                    textSize(unit * 100);
+                    text(history.join('\n'), width/2, height/2);
+
+                    // save history
+                    if (this.saved == false) {
+                        name = (year() + "-" + ("0" + month()).slice(-2) + "-" + ("0"+day()).slice(-2) + 
+                        " " + ("0" + hour()).slice(-2) + ":" + ("0" + minute()).slice(-2) + ":" + ("0" + second()).slice(-2))
+                        save(history, name + ".txt");
+                        this.saved = true;
+                    }
+                    return;
+                }
+
+                // print question and waiting for answer
+                textAlign(CENTER, CENTER);
+                let unit = height/2000;
+                textSize(unit * 200);
+                textAlign(RIGHT, CENTER);
+                text(this.problems[this.current_index][0] + " ", width/2, height/4);
+                textAlign(LEFT, CENTER);
+                text("= "+ans, width/2, height/4);
+
+                // show history answers
+                textSize(unit * 100);
+                text(this.getAllAnswers(this.current_index), width/2, height/4 + unit * 100 * 2)
+
+                textSize(unit * 100);
+                textAlign(RIGHT, CENTER);
+                let last_millis = millis() - this.start_millis;
+                if (this.answers[this.N - 1].length > 0){
+                    text(this.numberOfCorrect() + ' / ' + this.N + '   ', width/2, height/2);
+                }
+                textAlign(LEFT, CENTER);
+                text('   ' + (last_millis/1000).toFixed(2) + 's', width/2, height/2);
+            }
+
+            answer(ans) {
+                if (this.isAllPassed()) {
+                    return;
+                }
+                // record history
+                this.answers[this.current_index].push(ans);
+                
+                // find next problem
+                if (this.isAllPassed()) {
+                    this.finish_millis = millis(); // record finish time
+                    return;
+                }
+                while(true) {
+                    this.current_index = (this.current_index + 1) % this.N;
+                    if (this.answers[this.current_index].length == 0) {
+                        break;
+                    }
+                    if (this.answers[this.current_index][this.answers[this.current_index].length-1] != this.problems[this.current_index][1]) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        let problemSet = undefined;
+        let generator = new 两位数乘法();
+        let ans = "";
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            textFont("Comic Sans MS");
+            fill(50);
+            stroke(0);
+            strokeWeight(5);
+        }
+
+        function draw() {
+            background(220, 230, 210);
+            if (problemSet == undefined) {
+                textAlign(CENTER, CENTER);
+                textSize(100);
+                text("两位数乘法练习题\n回车开始做题", width/2, height/4);
+            } else {
+                problemSet.draw(ans);
+            }
+        }
+
+
+        function keyPressed() {
+            print(key);
+
+            if (key>="0" && key<="9") {
+                ans = ans + key;
+            }
+            if (key == "Backspace") {
+                ans = ans.substring(0, ans.length-1);
+            }
+
+            if (key == "Enter") {
+                if (problemSet == undefined || problemSet.isAllPassed()) {
+                    // start a new problem set
+                    problemSet = new ProblemSet(generator, 5);
+                    return;
+                } else {
+                    problemSet.answer(ans);
+                    ans = "";
+                }
+            }
+        }
+    </script>
+</html>
