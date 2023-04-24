@@ -6,7 +6,19 @@
     <description>Recent content in Posts on 淺斟低唱</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 16 Apr 2023 14:09:34 +0800</lastBuildDate><atom:link href="https://zhangkaixu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Apr 2023 14:08:54 +0800</lastBuildDate><atom:link href="https://zhangkaixu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>参观香港大学</title>
+      <link>https://zhangkaixu.github.io/posts/visit_hku/</link>
+      <pubDate>Mon, 24 Apr 2023 14:08:54 +0800</pubDate>
+      
+      <guid>https://zhangkaixu.github.io/posts/visit_hku/</guid>
+      <description>三年来重新签注了港澳通行证，又有机会去香港了。第一次恢复通行，以前主要的景点都去过了，这次打算去香港大学逛一下。
+去港大之前还去了香港海事博物馆，看到很多有意思的东西。比如航海时测量工具，有些跟以前玩过的《大航海时代》游戏有点相关。
+港大在香港岛西边的山坡下，小而紧凑。大部分是华人学生，其中内地学生也不少，回归这么多年了。软硬件条件都很好。香港大学与内地大学不是一个概念，现在的大学与二十年前的大学也不是一个概念了。倒是看见“邵逸夫楼”、“梁𨱇琚楼”倒是有几分熟悉的感觉。纪念品店没买啥东西，在出版社书店买了一本关于澳门历史的书《A Macau Narrative》。
+去港大之前，还申请了看一个港大内的讲座，作为参观内容的一部分。假装又回到校园听讲座的时光了。大概是这个项目的一个分享Smart Water Auditing using IoT and Machine Learning。感觉港大中科学、技术、工程是三种不同的方向。以前技术和工程我好像还不太去区分。</description>
+    </item>
+    
     <item>
       <title>用p5.js给孩子写的计算题练习网页</title>
       <link>https://zhangkaixu.github.io/posts/2023-04-14%E8%AE%A1%E7%AE%97%E9%A2%98/intro/</link>
